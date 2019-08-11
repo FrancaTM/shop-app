@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:my_shop_app/screens/products_overview_screen.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -7,23 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('My Shop App'),
-      ),
-      body: Center(
-        child: Text(
-          'shop sample',
-        ),
-      ),
+      home: ProductsOverviewScreen(),
     );
   }
 }
