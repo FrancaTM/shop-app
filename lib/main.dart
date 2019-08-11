@@ -10,6 +10,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       home: ProductsOverviewScreen(),
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        accentColor: Colors.deepOrange,
+        fontFamily: 'Lato',
+      ),
     );
   }
 }
