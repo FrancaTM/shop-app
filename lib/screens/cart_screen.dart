@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:my_shop_app/providers/cart_provider.dart' show CartProvider;
 import 'package:my_shop_app/widgets/cart_item.dart';
+import 'package:my_shop_app/providers/orders_provider.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
@@ -41,7 +42,14 @@ class CartScreen extends StatelessWidget {
                   FlatButton(
                     child: Text('ORDER NOW'),
                     textColor: Theme.of(context).primaryColor,
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<OrdersProvider>(context, listen: false)
+                          .addOrder(
+                        cart.items.values.toList(),
+                        cart.totalAmount,
+                      );
+                      cart.clearCart();
+                    },
                   ),
                 ],
               ),
