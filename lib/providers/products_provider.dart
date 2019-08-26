@@ -66,41 +66,39 @@ class ProductsProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> addProduct(Product product) {
-    final url = 'https://flutter-shop-app-3cfa0.firebaseio.com/products.json';
+  Future<void> addProduct(Product product) async {
+    const url = 'https://flutter-shop-app-3cfa0.firebaseio.com/products.jso';
 
-    return http
-        .post(
-      url,
-      body: json.encode(
-        {
-          'title': product.title,
-          'description': product.description,
-          'imageUrl': product.imageUrl,
-          'price': product.price,
-          'isFavorite': product.isFavorite,
-        },
-      ),
-    )
-        .then(
-      (response) {
-        final newProduct = Product(
-          title: product.title,
-          description: product.description,
-          imageUrl: product.imageUrl,
-          price: product.price,
-          id: json.decode(response.body)['name'],
-        );
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode(
+          {
+            'title': product.title,
+            'description': product.description,
+            'imageUrl': product.imageUrl,
+            'price': product.price,
+            'isFavorite': product.isFavorite,
+          },
+        ),
+      );
 
-        // _items.insert(0, newProduct); // at the start of the list
-        _items.add(newProduct);
+      final newProduct = Product(
+        title: product.title,
+        description: product.description,
+        imageUrl: product.imageUrl,
+        price: product.price,
+        id: json.decode(response.body)['name'],
+      );
 
-        notifyListeners();
-      },
-    ).catchError((error) {
+      // _items.insert(0, newProduct); // at the start of the list
+      _items.add(newProduct);
+
+      notifyListeners();
+    } catch (error) {
       print(error);
       throw error;
-    });
+    }
   }
 
   void updateProduct(String id, Product newProduct) {
