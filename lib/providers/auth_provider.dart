@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:my_shop_app/models/http_exception.dart';
+import 'package:my_shop_app/api_key.dart';
 
 class AuthProvider with ChangeNotifier {
   String _token;
@@ -12,7 +13,7 @@ class AuthProvider with ChangeNotifier {
   Future<void> _authenticate(
       String email, String password, String urlSegment) async {
     final url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyBXM_Cfzjrdtbg68bHQ_Ot82VC4ewBU_30';
+        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=$apiKey';
 
     try {
       final response = await http.post(
