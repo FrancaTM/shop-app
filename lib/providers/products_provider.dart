@@ -41,6 +41,9 @@ class ProductsProvider with ChangeNotifier {
     // ),
   ];
   // var _showFavoritesOnly = false;
+  final String authToken;
+
+  ProductsProvider(this.authToken, this._items);
 
   List<Product> get items {
     // if (_showFavoritesOnly) {
@@ -68,7 +71,8 @@ class ProductsProvider with ChangeNotifier {
   // }
 
   Future<void> fetchAndSetProducts() async {
-    const url = 'https://flutter-shop-app-3cfa0.firebaseio.com/products.json';
+    final url =
+        'https://flutter-shop-app-3cfa0.firebaseio.com/products.json?auth=$authToken';
 
     try {
       final List<Product> loadedProducts = [];
