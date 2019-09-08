@@ -21,8 +21,9 @@ class OrderItem {
 class OrdersProvider with ChangeNotifier {
   List<OrderItem> _orders = [];
   final String authToken;
+  final String userId;
 
-  OrdersProvider(this.authToken, this._orders);
+  OrdersProvider(this.authToken, this.userId, this._orders);
 
   List<OrderItem> get orders {
     return [..._orders];
@@ -30,7 +31,7 @@ class OrdersProvider with ChangeNotifier {
 
   Future<void> fetchAndSetOrders() async {
     final url =
-        'https://flutter-shop-app-3cfa0.firebaseio.com/orders.json?auth=$authToken';
+        'https://flutter-shop-app-3cfa0.firebaseio.com/orders/$userId.json?auth=$authToken';
 
     try {
       final List<OrderItem> loadedOrders = [];
@@ -70,7 +71,7 @@ class OrdersProvider with ChangeNotifier {
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
     final url =
-        'https://flutter-shop-app-3cfa0.firebaseio.com/orders.json?auth=$authToken';
+        'https://flutter-shop-app-3cfa0.firebaseio.com/orders/$userId.json?auth=$authToken';
     final timestamp = DateTime.now();
 
     try {
