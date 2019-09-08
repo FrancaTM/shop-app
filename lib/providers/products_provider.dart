@@ -71,12 +71,13 @@ class ProductsProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> fetchAndSetProducts() async {
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     var url =
-        'https://flutter-shop-app-3cfa0.firebaseio.com/products.json?auth=$authToken';
+        'https://flutter-shop-app-3cfa0.firebaseio.com/products.json?auth=$authToken&$filterString';
 
     try {
-      final List<Product> loadedProducts = [];
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
@@ -89,6 +90,7 @@ class ProductsProvider with ChangeNotifier {
       final favoriteResponse = await http.get(url);
       final favoriteData = json.decode(favoriteResponse.body);
 
+      final List<Product> loadedProducts = [];
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(
           Product(
@@ -101,12 +103,11 @@ class ProductsProvider with ChangeNotifier {
                 favoriteData == null ? false : favoriteData[prodId] ?? false,
           ),
         );
-
-        _items = loadedProducts;
-        notifyListeners();
       });
+      _items = loadedProducts;
+      notifyListeners();
     } catch (error) {
-      throw error;
+      throw (error);
     }
   }
 
@@ -123,7 +124,7 @@ class ProductsProvider with ChangeNotifier {
             'description': product.description,
             'imageUrl': product.imageUrl,
             'price': product.price,
-            // 'isFavorite': product.isFavorite,
+            'creatorId': userId,
           },
         ),
       );
