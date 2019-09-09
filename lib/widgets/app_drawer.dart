@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import 'package:my_shop_app/providers/auth_provider.dart';
 import 'package:my_shop_app/screens/orders_screen.dart';
-import 'package:my_shop_app/screens/products_overview_screen.dart';
 import 'package:my_shop_app/screens/user_products_screen.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -21,8 +20,7 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.shop),
             title: Text('Shop'),
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(ProductsOverviewScreen.routeName);
+              Navigator.of(context).pushReplacementNamed('/');
             },
           ),
           Divider(),
@@ -49,6 +47,8 @@ class AppDrawer extends StatelessWidget {
             title: Text('Logout'),
             onTap: () {
               Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed('/');
+
               Provider.of<AuthProvider>(context, listen: false).logout();
             },
           ),
